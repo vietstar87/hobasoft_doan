@@ -35,49 +35,59 @@
 
                                         $tax_query = array();
                                         $tax_query['relation'] = 'OR';
-                                        if($_GET['danh_muc']){
-                                            $danh_muc = $_GET['danh_muc'];
-                                            $tax_query[] = array(
-                                                'taxonomy' => 'danh_muc',  // <- you should put real taxonomy name in here
-                                                'field' => 'term_id',
-                                                'terms' => $danh_muc
-                                            );
+                                        if(isset($_GET['danh_muc'])){
+                                            if($_GET['danh_muc']){
+                                                $danh_muc = $_GET['danh_muc'];
+                                                $tax_query[] = array(
+                                                    'taxonomy' => 'danh_muc',  // <- you should put real taxonomy name in here
+                                                    'field' => 'term_id',
+                                                    'terms' => $danh_muc
+                                                );
+                                            }
                                         }
 
-                                        if($_GET['region_interior']){
-                                            $region_interior = $_GET['region_interior'];
-                                                $tax_query[] = array(
-                                                    'taxonomy' => 'region_interior',  // <- you should put real taxonomy name in here
-                                                    'field' => 'term_id',
-                                                    'terms' => $region_interior
-                                                );
+                                        if(isset($_GET['region_interior'])){
+                                            if($_GET['region_interior']){
+                                                $region_interior = $_GET['region_interior'];
+                                                    $tax_query[] = array(
+                                                        'taxonomy' => 'region_interior',  // <- you should put real taxonomy name in here
+                                                        'field' => 'term_id',
+                                                        'terms' => $region_interior
+                                                    );
+                                            }
                                         }
 
-                                        if($_GET['region_oversea']){
-                                            $region_overseas = $_GET['region_oversea'];
-                                                $tax_query[] = array(
-                                                    'taxonomy' => 'region_oversea',  // <- you should put real taxonomy name in here
-                                                    'field' => 'term_id',
-                                                    'terms' => $region_overseas
-                                                );
+                                        if(isset($_GET['region_oversea'])){
+                                            if($_GET['region_oversea']){
+                                                $region_overseas = $_GET['region_oversea'];
+                                                    $tax_query[] = array(
+                                                        'taxonomy' => 'region_oversea',  // <- you should put real taxonomy name in here
+                                                        'field' => 'term_id',
+                                                        'terms' => $region_overseas
+                                                    );
+                                            }
                                         }
 
-                                        if($_GET['khoang_gia']){
-                                            $khoang_gias = $_GET['khoang_gia'];
-                                                $tax_query[] = array(
-                                                    'taxonomy' => 'khoang_gia',  // <- you should put real taxonomy name in here
-                                                    'field' => 'term_id',
-                                                    'terms' => $khoang_gias
-                                                );
+                                        if(isset($_GET['khoang_gia'])){
+                                            if($_GET['khoang_gia']){
+                                                $khoang_gias = $_GET['khoang_gia'];
+                                                    $tax_query[] = array(
+                                                        'taxonomy' => 'khoang_gia',  // <- you should put real taxonomy name in here
+                                                        'field' => 'term_id',
+                                                        'terms' => $khoang_gias
+                                                    );
+                                            }
                                         }
 
-                                        if($_GET['rate']){
-                                            $rates = $_GET['rate'];
-                                                $tax_query[] = array(
-                                                    'taxonomy' => 'rate',  // <- you should put real taxonomy name in here
-                                                    'field' => 'term_id',
-                                                    'terms' => $rates
-                                                );
+                                        if(isset($_GET['rate'])){
+                                            if($_GET['rate']){
+                                                $rates = $_GET['rate'];
+                                                    $tax_query[] = array(
+                                                        'taxonomy' => 'rate',  // <- you should put real taxonomy name in here
+                                                        'field' => 'term_id',
+                                                        'terms' => $rates
+                                                    );
+                                            }
                                         }
 
                                         $post_type = array();
