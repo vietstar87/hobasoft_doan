@@ -63,11 +63,11 @@
                                     echo 'active';
                                 }
                             } ?>">
-                                <input <?php foreach ($_GET['region_interior'] as $interi) {
+                                <input <?php if(isset($_GET['region_interior'])) { foreach ($_GET['region_interior'] as $interi) {
                                     if ($interi == $interior->term_id) {
                                         echo 'checked';
                                     }
-                                } ?> data-taxonomy-name="region_interior" type="checkbox"
+                                } } ?> data-taxonomy-name="region_interior" type="checkbox"
                                        name="region_interior[]"
                                        value="<?php echo $interior->term_id ?>"/><?php echo $interior->name ?>
                             </label>
@@ -101,11 +101,11 @@
                                     echo 'active';
                                 }
                             } ?>">
-                                <input <?php foreach ($_GET['region_oversea'] as $region) {
+                                <input <?php if(isset($_GET['region_oversea'])) { foreach ($_GET['region_oversea'] as $region) {
                                     if ($region == $region_oversea->term_id) {
                                         echo 'checked';
                                     }
-                                } ?> data-taxonomy-name="region_oversea" type="checkbox" name="region_oversea[]" value="<?php echo $region_oversea->term_id ?>"/><?php echo $region_oversea->name ?>
+                                } } ?> data-taxonomy-name="region_oversea" type="checkbox" name="region_oversea[]" value="<?php echo $region_oversea->term_id ?>"/><?php echo $region_oversea->name ?>
                             </label>
                             <?php
                         }
@@ -136,11 +136,11 @@
                                     echo 'active';
                                 }
                             } ?>">
-                                <input <?php foreach ($_GET['khoang_gia'] as $khgia) {
+                                <input <?php if(isset($_GET['khoang_gia'])) { foreach ($_GET['khoang_gia'] as $khgia) {
                                     if ($khgia == $khoang_gia->term_id) {
                                         echo 'checked';
                                     }
-                                } ?> data-taxonomy-name="khoang_gia" type="checkbox" name="khoang_gia[]" value="<?php echo $khoang_gia->term_id ?>"/><?php echo $khoang_gia->name ?>
+                                } } ?> data-taxonomy-name="khoang_gia" type="checkbox" name="khoang_gia[]" value="<?php echo $khoang_gia->term_id ?>"/><?php echo $khoang_gia->name ?>
                             </label>
                             <?php
                         }
@@ -171,11 +171,11 @@
                                     echo 'active';
                                 }
                             } ?>">
-                                <input <?php foreach ($_GET['rate'] as $rat) {
+                                <input <?php if(isset($_GET['rate'])) { foreach ($_GET['rate'] as $rat) {
                                     if ($rat == $rate->term_id) {
                                         echo 'checked';
                                     }
-                                } ?>  data-taxonomy-name="rate" type="checkbox" name="rate[]" value="<?php echo $rate->term_id ?>"/><?php echo $rate->name ?>
+                                } } ?>  data-taxonomy-name="rate" type="checkbox" name="rate[]" value="<?php echo $rate->term_id ?>"/><?php echo $rate->name ?>
                             </label>
                             <?php
                         }
