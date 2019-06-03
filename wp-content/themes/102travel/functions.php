@@ -1,5 +1,6 @@
 <?php
 require_once (dirname(__FILE__) . '/config/theme-config.php');
+require_once (dirname(__FILE__) . '/config/acf.php');
 
 function theme_setup()
 {
