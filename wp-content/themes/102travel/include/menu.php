@@ -55,21 +55,5 @@
             <span class="hotline__number"><?php echo $theme['company-hotline']; ?></span>
         </div>
 
-<!--        <form action="/registernewletter" method="post" data-toggle="validator">-->
-<!--            <div class="newsletter">-->
-<!--                <div class="form-group">-->
-<!--                    <input type="text" class="form-control newsletter__input" name="email_newsletter"-->
-<!--                           placeholder="Đăng ký nhận bản tin khuyến mãi" value=""-->
-<!--                           data-fv-notempty="true"-->
-<!--                           data-fv-notempty-message="Vui lòng nhập Email"-->
-<!--                           pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$"-->
-<!--                           data-fv-regexp-message="Email không hợp lệ"-->
-<!--                    />-->
-<!--                    <button type="submit" class="btn btn-success newsletter__button"><i-->
-<!--                            class="fa fa-arrow-circle-right"></i></button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </form>-->
-
     </div>
 </div>

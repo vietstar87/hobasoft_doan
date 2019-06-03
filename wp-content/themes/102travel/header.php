@@ -2,72 +2,12 @@
 <header id="header" class="header clearfix">
     <div id="top-bar" class="header__top top-bar clearfix">
         <div class="container">
-            <!--  <form id="formCity" method="post" action="/common/index/changecity"> -->
             <div class="row">
-
-<!--                <div class="top-bar__item newsletter-link pull-left dropdown group-register-newsletter">-->
-<!--                    <ul class="navbar-center">-->
-<!--                        <li class="dropdown dropdown-arrow">-->
-<!--                            <a href="#" data-toggle="dropdown"><i class="hd hd-newsletter"></i>-->
-<!--                                &nbsp;Đăng ký bản tin</a>-->
-<!--                            <ul class="dropdown-menu newsletter-popup">-->
-<!--                                <li>-->
-<!--                                    <div class="modal-header">-->
-<!--                                        <h4 class="modal-title text-center">ĐĂNG KÝ BẢN TIN</h4>-->
-<!--                                    </div>-->
-<!--                                    <div class="modal-body clearfix">-->
-<!--                                        <form id="login-form-popup" class="form--general"-->
-<!--                                              method="post" action="/registernewletter"-->
-<!--                                              data-toggle="validator">-->
-<!--                                            <div class="form-group">-->
-<!--                                                <div class="input-group">-->
-<!--                                                    <div class="input-group-addon"><i-->
-<!--                                                                class="hd hd-email"></i></div>-->
-<!--                                                    <input type="text" class="form-control"-->
-<!--                                                           id="email_newsletter"-->
-<!--                                                           name="email_newsletter"-->
-<!--                                                           placeholder="Nhập email"-->
-<!--                                                           autocomplete="off"-->
-<!--                                                           data-fv-notempty="true"-->
-<!--                                                           data-fv-notempty-message="Vui lòng nhập Email"-->
-<!--                                                           pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$"-->
-<!--                                                           data-fv-regexp-message="Email không hợp lệ"-->
-<!--                                                    />-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="form-group register-new-letter-comfirm">-->
-<!--                                                <div class="input-group">-->
-<!--                                                    <label for="" class="control-label"-->
-<!--                                                           style="font-weight: normal;">-->
-<!--                                                        <input type="checkbox" name="agree"-->
-<!--                                                               id="agree" value="1"-->
-<!--                                                               data-fv-notempty="true"-->
-<!--                                                               data-fv-notempty-message="Bạn cần phải đồng ý với chính sách bảo mật thông tin">-->
-<!--                                                        Đồng ý với <a target="_blank"-->
-<!--                                                                      href="https://www.hotdeal.vn/chinh-sach-bao-mat-thong-tin.html">chính-->
-<!--                                                            sách bảo mật thông tin</a>.-->
-<!--                                                    </label>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="form-group">-->
-<!--                                                <button type="submit"-->
-<!--                                                        class="btn btn-success btn-block" disabled>-->
-<!--                                                    ÐĂNG KÝ-->
-<!--                                                </button>-->
-<!--                                            </div>-->
-<!--                                        </form>-->
-<!--                                    </div>-->
-<!--                                </li>-->
-<!--                            </ul>-->
-<!--                        </li>-->
-<!--                    </ul>-->
-<!--                </div>-->
-
                 <nav class="top-bar__item top-bar__item--nav navigation navigation--inline pull-right">
                     <ul id="user_support" class="navbar-right">
                         <li><a href="callto:<?php echo $theme['company-hotline']; ?>">
-                                <i class="fa fa-phone"></i> Hotline:&nbsp;<span
-                                        class="hotline__number"><?php echo $theme['company-hotline']; ?></span> </a>
+                                <i class="fa fa-phone"></i> Hotline:&nbsp;
+                                <span class="hotline__number"><?php echo $theme['company-hotline']; ?></span> </a>
                         </li>
                     </ul>
                 </nav>

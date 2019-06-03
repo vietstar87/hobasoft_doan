@@ -6,7 +6,8 @@
                 <div class="hidden-xs visible-xs visible-sm">
                     <div class="hotline">
                         <span class="hotline__text">HOTLINE&nbsp;</span>
-                        <span class="hotline__number"><?php echo $theme['company-hotline']; ?></span>
+                        <span class="hotline__number"><?php echo $theme['company-hotline']; ?>
+                        </span>
                     </div>
                 </div>
                 <div class="col-md-8 footer-menu">
