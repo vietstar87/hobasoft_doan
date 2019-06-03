@@ -53,7 +53,7 @@
                                                                      alt="<?php the_title() ?>"/>
                                                                 <div class="item__meta">
                                                                     <span class="view"
-                                                                          href="/ho-chi-minh/tour-trong-nuoc/tour-2n1d-tuyet-tinh-coc-mien-tay-chau-doc-vieng-ba-chua-xu-can-tho-con-son-ap-dung-le-tet-353373.html">Xem Ngay</span>
+                                                                          href="<?php the_permalink() ?>">Xem Ngay</span>
                                                                 </div>
                                                             </a>
                                                         </div>
@@ -64,23 +64,6 @@
                                                                    title="<?php the_title() ?>"><?php the_title() ?></a>
                                                                 <meta itemprop="brand" content=""/>
                                                             </h3>
-                                                        </div>
-                                                        <div class="product__info">
-                                                            <div class="product__price _product_price" itemprop="offers"
-                                                                 itemscope
-                                                                 itemtype="http://schema.org/Offer">
-                                                                <meta itemprop="priceCurrency" content="VND"/>
-                                                                <span class="price">
-                                                                    <span class="price__value" itemprop="price"><?php echo number_format(get_field('gia_khuyen_mai')); ?></span><span class="price__symbol">đ</span>
-                                                                    <!--                                                                    <span class="price__discount">-34%</span>-->
-                                                                </span>
-                                                            </div>
-                                                            <div class="product__price product__price--list-price _product_price_old "
-                                                                 style="display: inline-block;">
-                                                                <span class="price price--list-price">
-                                                                    <span class="price__value"><?php echo number_format(get_field('price')); ?></span><span class="price__symbol">đ</span>
-                                                                </span>
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

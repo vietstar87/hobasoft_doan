@@ -855,3 +855,54 @@ function pagination($pages = '', $range = 4)
         echo "</div>\n";
     }
 }
+
+add_action( 'admin_menu', 'my_admin_menu' );
+
+function my_admin_menu() {
+    add_menu_page( 'Orders', 'Orders', 'manage_options', 'admin_orders', 'orders_admin_page', 'dashicons-tickets', 6  );
+}
+
+function orders_admin_page(){
+    global $wpdb;
+    $results = $wpdb->get_results( "SELECT * FROM 102_orders order by id desc", OBJECT );
+    ?>
+    <div class="wrap">
+        <h2>Orders</h2>
+    </div>
+    <table class="wp-list-table widefat fixed striped pages">
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Tên khách hàng</td>
+                <td>Địa chỉ</td>
+                <td>Thành phố</td>
+                <td>Quận/Huyện</td>
+                <td>Phường/Xã</td>
+                <td>Số điện thoại</td>
+                <td>Tên sản phẩm</td>
+                <td>Số lượng</td>
+                <td>Thành tiền</td>
+            </tr>
+        </thead>
+        <tbody>
+            <?php 
+            foreach ($results as $result) { ?>
+
+            <tr>
+                <td><?php echo $result->id; ?></td>
+                <td><?php echo $result->order_name; ?></td>
+                <td><?php echo $result->order_address; ?></td>
+                <td><?php echo $result->order_city; ?></td>
+                <td><?php echo $result->order_district; ?></td>
+                <td><?php echo $result->order_ward; ?></td>
+                <td><?php echo $result->order_phone; ?></td>
+                <td><a target="_blank" href="<?php echo the_permalink($result->order_product); ?>"><?php echo get_the_title($result->order_product); ?></a></td>
+                <td><?php echo $result->order_quantity; ?></td>
+                <td><?php echo number_format($result->order_total); ?> đ</td>
+            </tr>
+            <?php }
+            ?>
+        </tbody>
+    </table>
+    <?php
+}

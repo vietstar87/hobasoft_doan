@@ -68,7 +68,7 @@
                                                             <meta itemprop="priceCurrency" content="VND"/>
                                                             <?php if(get_field('gia_khuyen_mai')) : ?>
                                                             <span class="price">
-                                                                    <span class="price__value" itemprop="price"><?php echo get_field('gia_khuyen_mai'); ?></span><span class="price__symbol"> đ</span>
+                                                                    <span class="price__value" itemprop="price"><?php echo number_format(get_field('gia_khuyen_mai')); ?></span><span class="price__symbol"> đ</span>
                                                                 <!--                                                                    <span class="price__discount">-34%</span>-->
                                                                 </span>
                                                             <?php endif; ?>
@@ -77,7 +77,7 @@
                                                         <div class="product__price product__price--list-price _product_price_old "
                                                              style="display: inline-block;">
                                                                 <span class="price price--list-price">
-                                                                    <span class="price__value"><?php echo get_field('price'); ?></span><span class="price__symbol"> đ</span>
+                                                                    <span class="price__value"><?php echo number_format(get_field('price')); ?></span><span class="price__symbol"> đ</span>
                                                                 </span>
                                                         </div>
                                                         <?php endif; ?>

@@ -113,10 +113,27 @@
                                                 </div>
                                             </div>
                                         </div>
-
+                                        <br class="hidden-xs hidden-sm"/>
+                                        <div>
+                                            <?php if(get_field('hanh_trinh')) { ?>
+                                                <p>Hành trình: <?php the_field('hanh_trinh') ?></p>
+                                            <?php } ?>
+                                            <?php if(get_field('so_ngay')) { ?>
+                                                <p>Số ngày: <?php the_field('so_ngay') ?></p>
+                                            <?php } ?>
+                                            <?php if(get_field('noi_bat_dau')) { ?>
+                                                <p>Nơi bắt đầu: <?php the_field('noi_bat_dau') ?></p>
+                                            <?php } ?>
+                                            <?php if(get_field('ngay_khoi_hanh')) { ?>
+                                                <p>Ngày khởi hành: <?php the_field('ngay_khoi_hanh') ?></p>
+                                            <?php } ?>
+                                            <?php if(get_field('phuong_tien')) { ?>
+                                                <p>Phương tiện: <?php the_field('phuong_tien') ?></p>
+                                            <?php } ?>
+                                        </div>
                                         <div class="product__add-to-cart border-top clearfix">
                                                 <div class="add-to-cart__actions add-to-cart-buttons">
-                                                    <a href="<?php echo get_page_link( get_page_by_path( 'cart' ) ); ?>" id="btn--buy-now" class="btn btn-success btn--buy-now btn--buy-now-x2" data-toggle="modal" data-target="#myModal">
+                                                <a href="<?php echo get_page_link( get_page_by_path( 'cart' ) ); ?>?product=<?php echo the_ID(); ?>" class="btn btn-success btn--buy-now btn--buy-now-x2">
                                                         MUA NGAY <i class="fa fa-long-arrow-right"></i>
                                                     </a>
                                                 </div>
