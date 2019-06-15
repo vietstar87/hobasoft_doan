@@ -1,6 +1,18 @@
 <?php /* Template Name: Cart */ ?>
 <?php 
+session_start();
 $product_id = $_GET['product'];
+$post_id = get_post( $product_id ); 
+$title = $post_id->post_title;
+if($title) {
+    if($_SESSION['product']) {
+        array_push($_SESSION['product'], $product_id);
+    } else {
+        $_SESSION['product'] = array($product_id);
+    }
+}
+$product_all = array_unique($_SESSION['product']);
+$session_id = session_id();
 ?>
 <!DOCTYPE html>
 <html>
@@ -20,6 +32,7 @@ $product_id = $_GET['product'];
                                     <div class="content-sidebar--2">
                                         <div class="content" style="width: 100% !important">
                                             <form class="form form-blocking" action="<?php echo get_page_link( get_page_by_path( 'checkout-step-1' ) ); ?>" method="post">
+                                                <input type="hidden" name="session_id" value="<?php echo $session_id; ?>">
                                                 <div class="box box--no-padding">
                                                     <div class="box__header visible-xs visible-sm">
                                                         <h2 class="box__title">Thông tin sản phẩm</h2>
@@ -35,19 +48,20 @@ $product_id = $_GET['product'];
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
+                                                                <?php foreach ($product_all as $product_value) { ?>
                                                                 <tr>
                                                                     <td class="image">
-                                                                        <img class="pull-left" src="<?php echo get_the_post_thumbnail_url($product_id,'product-image') ?>" />
+                                                                        <img class="pull-left" src="<?php echo get_the_post_thumbnail_url($product_value,'product-image') ?>" />
                                                                     </td>
                                                                     <td class="name">
-                                                                        <?php echo get_the_title($product_id); ?>
+                                                                        <?php echo get_the_title($product_value); ?>
                                                                     </td>
                                                                     <td class="unit">
-                                                                        <label><?php echo number_format(get_field('price',$product_id)); ?></label>
+                                                                        <label><?php echo number_format(get_field('price',$product_value)); ?></label>
                                                                     </td>
                                                                     <td class="quantity">
-                                                                        <input type="hidden" name="product" value="<?php echo $product_id; ?>">
-                                                                        <select class="quantity__modifier quantity-modifier quantity-modifier-select " name="quantity">
+                                                                        <input type="hidden" name="product[]" value="<?php echo $product_value; ?>">
+                                                                        <select class="quantity__modifier quantity-modifier quantity-modifier-select " name="quantity[]">
                                                                             <option value="1" selected="selected">1</option>
                                                                             <option value="2">2</option>
                                                                             <option value="3">3</option>
@@ -62,6 +76,7 @@ $product_id = $_GET['product'];
                                                                     </td>
                                                                     <td id="total_355245" class="total"></td>
                                                                 </tr>
+                                                                <?php } ?>
                                                             </tbody>
                                                         </table>
                                                     </div>

@@ -861,11 +861,59 @@ add_action( 'admin_menu', 'my_admin_menu' );
 
 function my_admin_menu() {
     add_menu_page( 'Orders', 'Orders', 'manage_options', 'admin_orders', 'orders_admin_page', 'dashicons-tickets', 6  );
+    add_submenu_page( 'admin_orders', 'Doanh số', 'Báo cáo doanh thu', 'manage_options', 'order-doanh-so', 'orders_doanhso_admin_page');
+}
+
+function orders_doanhso_admin_page() {
+global $wpdb;
+    ?>
+    <div class="wrap">
+        <h2>Báo cáo</h2>
+    </div>
+    <table class="wp-list-table widefat fixed striped pages">
+        <thead>
+            <tr>
+                <td>Báo cáo ngày: <?php echo current_time('d-m-Y' , $gmt = 7 ) ?></td>
+                <td>Báo cáo tuần: <?php echo date('d-m-Y', strtotime('+7 days') ); ?></td>
+                <td>Báo cáo tháng: <?php echo date('d-m-Y', strtotime('+30 days') ); ?></td>
+            </tr>
+        </thead>
+        <tbody>
+           <tr>
+                <td>
+                    <?php
+                        $order_current_date = $wpdb->get_results( "SELECT * FROM 102_orders WHERE DATE(`order_create_date`) = (CURDATE()) order by id desc", OBJECT );
+                        $order_current_total = $wpdb->get_results( "SELECT SUM(`order_total`) as TOTAL FROM 102_orders WHERE DATE(`order_create_date`) = (CURDATE()) order by id desc", OBJECT );
+                    ?>
+                    <p>Số lượng : <?php echo count($order_current_date); ?></p>
+                    <p>Doanh thu : <?php echo number_format($order_current_total[0]->TOTAL); ?> đ</p>
+                </td>
+                <td>
+                    <?php
+                        $order_week_date = $wpdb->get_results( "SELECT * FROM 102_orders WHERE DATE(`order_create_date`) >= (CURDATE()-7) order by id desc", OBJECT );
+                        $order_week_total = $wpdb->get_results( "SELECT SUM(`order_total`) as TOTAL FROM 102_orders WHERE DATE(`order_create_date`) >= (CURDATE()-7) order by id desc", OBJECT );
+                    ?>
+                    <p>Số lượng : <?php echo count($order_week_date); ?></p>
+                    <p>Doanh thu : <?php echo number_format($order_week_total[0]->TOTAL); ?> đ</p>
+                </td>
+                <td>
+                    <?php
+                        $order_month_date = $wpdb->get_results( "SELECT * FROM 102_orders WHERE DATE(`order_create_date`) >= (CURDATE()-30) order by id desc", OBJECT );
+                        $order_month_total = $wpdb->get_results( "SELECT SUM(`order_total`) as TOTAL FROM 102_orders WHERE DATE(`order_create_date`) >= (CURDATE()-30) order by id desc", OBJECT );
+                    ?>
+                    <p>Số lượng : <?php echo count($order_month_date); ?></p>
+                    <p>Doanh thu : <?php echo number_format($order_month_total[0]->TOTAL); ?> đ</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <?php
 }
 
 function orders_admin_page(){
     global $wpdb;
     $results = $wpdb->get_results( "SELECT * FROM 102_orders order by id desc", OBJECT );
+    echo orders_doanhso_admin_page();
     ?>
     <div class="wrap">
         <h2>Orders</h2>
@@ -874,14 +922,14 @@ function orders_admin_page(){
         <thead>
             <tr>
                 <td>ID</td>
+                <td>Ngày tạo</td>
                 <td>Tên khách hàng</td>
                 <td>Địa chỉ</td>
                 <td>Thành phố</td>
                 <td>Quận/Huyện</td>
                 <td>Phường/Xã</td>
                 <td>Số điện thoại</td>
-                <td>Tên sản phẩm</td>
-                <td>Số lượng</td>
+                <td width="30%">Tên sản phẩm</td>
                 <td>Thành tiền</td>
             </tr>
         </thead>
@@ -891,14 +939,22 @@ function orders_admin_page(){
 
             <tr>
                 <td><?php echo $result->id; ?></td>
+                <td><?php echo $result->order_create_date; ?></td>
                 <td><?php echo $result->order_name; ?></td>
                 <td><?php echo $result->order_address; ?></td>
                 <td><?php echo $result->order_city; ?></td>
                 <td><?php echo $result->order_district; ?></td>
                 <td><?php echo $result->order_ward; ?></td>
                 <td><?php echo $result->order_phone; ?></td>
-                <td><a target="_blank" href="<?php echo the_permalink($result->order_product); ?>"><?php echo get_the_title($result->order_product); ?></a></td>
-                <td><?php echo $result->order_quantity; ?></td>
+                <td>
+                    <?php 
+                    $products = json_decode($result->order_product)->product;
+                    foreach ($products as $key => $product) { 
+                        ?>
+                        <p><?php echo ($product->product_quantity); ?> x <a target="_blank" href="<?php echo the_permalink($product->product_id); ?>"><?php echo get_the_title($product->product_id); ?></a> - <?php echo number_format($product->product_price); ?></p> 
+                    <?php } ?>
+                    
+                </td>
                 <td><?php echo number_format($result->order_total); ?> đ</td>
             </tr>
             <?php }

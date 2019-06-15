@@ -2,6 +2,14 @@
 <?php 
     global $wpdb;
     $table = '102_orders';
+    $product = array();
+    $order_total = 0;
+    foreach ($_POST['order_product'] as $key => $value) {
+        $product['product'][$key]['product_id'] = $value;
+        $product['product'][$key]['product_quantity'] = $_POST['order_quantity'][$key];
+        $product['product'][$key]['product_price'] = $_POST['order_total'][$key];
+        $order_total = $order_total + $_POST['order_total'][$key];
+    }
     $data = array(
         'order_name' => $_POST['order_name'],
         'order_address' => $_POST['order_address'],
@@ -9,9 +17,8 @@
         'order_district'=> $_POST['order_district'],
         'order_ward'=> $_POST['order_ward'],
         'order_phone'=> $_POST['order_phone'],
-        'order_product'=> $_POST['order_product'],
-        'order_quantity'=> $_POST['order_quantity'],
-        'order_total'=> $_POST['order_total'],
+        'order_product'=> json_encode($product),
+        'order_total'=> $order_total,
     );
     $wpdb->insert($table,$data);
     $order_id = $wpdb->insert_id;
@@ -57,14 +64,20 @@
                                                         <tr>                                                            
                                                             <td>Phường: <?php echo $_POST['order_ward']; ?></td>
                                                         </tr>
+                                                        <?php
+                                                        $order_total = 0;
+                                                        foreach ($_POST['order_product'] as $key => $value) {
+                                                            $product['product'][$key]['product_id'] = $value;
+                                                            $product['product'][$key]['product_quantity'] = $_POST['order_quantity'][$key];
+                                                            $product['product'][$key]['product_price'] = $_POST['order_total'][$key];
+                                                            $order_total = $order_total + $_POST['order_total'][$key];
+                                                        ?>
                                                         <tr>
-                                                            <td>Sản phẩm: <?php echo get_the_title($_POST['order_product']); ?></td>
+                                                            <td>Sản phẩm <?php echo $key+1; ?>: <?php echo $_POST['order_quantity'][$key]; ?> x <?php echo get_the_title($value); ?></td>
                                                         </tr>
+                                                        <?php } ?>
                                                         <tr>
-                                                            <td>Số lượng: <?php echo $_POST['order_quantity']; ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Tổng cộng : <?php echo number_format($_POST['order_total']); ?> đ</td>
+                                                            <td>Tổng cộng : <?php echo number_format($order_total); ?> đ</td>
                                                         </tr>
                                                     </table>
                                                 </div>

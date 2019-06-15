@@ -1,7 +1,14 @@
 <?php /* Template Name: Checkout Step 1 */ ?>
+<?php
+session_start();
+session_id();
+session_unset();
+session_destroy();
+?>
 <?php 
-    $product = $_POST['product'];
-    $quantity = $_POST['quantity'];
+    $products = $_POST['product'];
+    $quantitys = $_POST['quantity'];
+    $session_id = $_POST['session_id'];
 ?>
 <!DOCTYPE html>
 <html>
@@ -43,10 +50,18 @@
                                             <div class="box__body address-container ">
 
                                                 <form id="check-out-step-2" class="form form-blocking form--general check-out-step-2" action="<?php echo get_page_link( get_page_by_path( 'checkout-step-2' ) ); ?>" method="post">
+                                                    <?php foreach ($products as $key => $product) { ?>
+                                                        <input type="hidden" name="order_product[<?php echo $key; ?>]" value="<?php echo $product; ?>">
+                                                        <input type="hidden" name="order_total[<?php echo $key; ?>]" value="<?php echo get_field('price',$product)*$quantitys[$key] ?>">
+                                                    <?php } ?>
+                                                    <?php foreach ($quantitys as $key => $quantity) { ?>
+                                                        <input type="hidden" name="order_quantity[<?php echo $key; ?>]" value="<?php echo $quantity; ?>">
+                                                    <?php } ?>
+
+                                                    
+
                                                     <div class="address-edit editable-section">
-                                                        <input type="hidden" name="order_product" value="<?php echo $product; ?>">
-                                                        <input type="hidden" name="order_quantity" value="<?php echo $quantity; ?>">
-                                                        <input type="hidden" name="order_total" value="<?php echo get_field('price',$product)*$quantity ?>">
+                                                        
                                                         <div class="row form">
                                                             <div class="col-md-6">
                                                                 <div class="form-group form-group-lg ">
@@ -178,24 +193,27 @@
                                             </div>
                                             <div class="box__body">
                                                 <div class="order-items">
-                                                    <div class="order-item" data-id="355225" data-gift="">
+                                                    <?php foreach ($products as $key => $product) { ?>
+                                                    <div class="order-item">
                                                         <div class="name">
-                                                            <span class="quantity"><?php echo $quantity; ?> x</span>
+                                                            <span class="quantity"><?php echo $quantitys[$key]; ?> x</span>
                                                             <a target="_blank" href="<?php the_permalink($product) ?>" title="<?php echo get_the_title($product); ?>">
                                                                 <?php echo get_the_title($product); ?>
                                                             </a>
                                                         </div>
-                                                        <div class="price">
-                                                            <?php echo number_format(get_field('price',$product)); ?> đ
+                                                        <div class="price" id="price_<?php echo $product ?>">
+                                                            <?php echo number_format($quantitys[$key] * get_field('price',$product)); ?> đ
                                                         </div>
                                                     </div>
+                                                    <?php
+                                                    } ?>
                                                 </div>
 
                                                 <ul class="order-summary">
                                                     <li class="sep"></li>
                                                     <li class="total">
                                                         <span class="k">Tổng cộng</span>
-                                                        <span class="v _total" id="cart_info_total _total"><?php echo number_format(get_field('price',$product)*$quantity) ?> đ</span>
+                                                        <span class="v _total" id="cart_info_total _total"></span>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -215,5 +233,3 @@
 <?php get_template_part('include/script') ?>
 </body>
 </html>
-
-
