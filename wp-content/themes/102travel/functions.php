@@ -910,14 +910,34 @@ global $wpdb;
     <?php
 }
 
+
+function orders_baocao_admin_page() {
+    ?>
+    <form action="<?php echo admin_url( 'admin.php?page=admin_orders'); ?>" method="GET">
+        <input type="hidden" name="page" value="admin_orders">
+    <div>
+        <div>Ngày bắt đầu :<input id="date" type="date" name="dateFirst"> Ngày kết thúc :<input id="date" type="date" name="dateLast"> <input type="submit" value="Chọn"></div>
+    </div>
+    </form>
+    <?php
+}
+
+
 function orders_admin_page(){
     global $wpdb;
-    $results = $wpdb->get_results( "SELECT * FROM 102_orders order by id desc", OBJECT );
+    if(isset($_GET['dateFirst']) || isset($_GET['dateLast'])) {
+        $results = $wpdb->get_results( "SELECT * FROM `102_orders` WHERE DATE(`order_create_date`) >= ". $_GET['dateFirst'] ." AND DATE(`order_create_date`) <= ". $_GET['dateLast'] ." order by id desc", OBJECT );
+    } else {
+        $results = $wpdb->get_results( "SELECT * FROM 102_orders order by id desc", OBJECT );
+    }
+    echo "<xmp>";
+    var_dump($results);
     echo orders_doanhso_admin_page();
     ?>
     <div class="wrap">
         <h2>Orders</h2>
     </div>
+    <?php echo orders_baocao_admin_page(); ?>
     <table class="wp-list-table widefat fixed striped pages">
         <thead>
             <tr>
@@ -931,6 +951,8 @@ function orders_admin_page(){
                 <td>Số điện thoại</td>
                 <td width="30%">Tên sản phẩm</td>
                 <td>Thành tiền</td>
+                <td>Trạng thái</td>
+                <td>Hành động</td>
             </tr>
         </thead>
         <tbody>
@@ -956,6 +978,33 @@ function orders_admin_page(){
                     
                 </td>
                 <td><?php echo number_format($result->order_total); ?> đ</td>
+                <td><?php 
+                    $order_status = $result->order_status; 
+                    switch ($order_status) {
+                        case 0:
+                            echo "Đơn đặt hàng mới";
+                            break;
+                        case 1:
+                                echo "Đơn đặt hàng đã xác nhận";
+                                break;                            
+                        case 2:
+                                echo "Đã ký hợp đồng & Thanh toán cọc";
+                                break;                                                    
+                        case 3:
+                                echo "Đơn hàng thành công";
+                                break;                      
+                        case 3:
+                                echo "Đơn hàng bị hủy";
+                                break;                                                                                       
+                        default:
+                            # code...
+                            break;
+                    }
+                    ?>    
+                </td>
+                <td>
+                    <a href="#" class="btn">Xác nhận đơn hàng</a>
+                </td>
             </tr>
             <?php }
             ?>

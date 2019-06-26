@@ -90,6 +90,7 @@
                                         </div>
 
                                         <div class="product__description" style="border-bottom: 1px solid #eaeaea;">
+                                            <p>Mã tour: <?php echo get_field('ma_tour');  ?></p>
                                             <?php the_excerpt() ?>
                                         </div>
 
