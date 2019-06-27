@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 15, 2019 at 04:43 PM
--- Server version: 10.1.40-MariaDB
--- PHP Version: 7.2.18
+-- Generation Time: Jun 27, 2019 at 09:44 AM
+-- Server version: 10.3.16-MariaDB
+-- PHP Version: 7.2.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `travel`
+-- Database: `hobasoft`
 --
 
 -- --------------------------------------------------------
@@ -31,6 +31,7 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `102_orders`;
 CREATE TABLE `102_orders` (
   `id` int(11) NOT NULL,
+  `order_code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `order_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `order_address` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `order_city` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -39,7 +40,8 @@ CREATE TABLE `102_orders` (
   `order_phone` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `order_product` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `order_total` int(255) NOT NULL,
-  `order_create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `order_status` int(10) NOT NULL DEFAULT 0,
+  `order_create_date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
