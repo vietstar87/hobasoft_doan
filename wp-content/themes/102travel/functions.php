@@ -873,7 +873,7 @@ global $wpdb;
     <table class="wp-list-table widefat fixed striped pages">
         <thead>
             <tr>
-                <td>Báo cáo ngày: <?php echo current_time('d-m-Y' , $gmt = 7 ) ?></td>
+                <td>Báo cáo ngày hôm nay: <?php echo current_time('d-m-Y' , $gmt = 7 ) ?></td>
                 <td>Báo cáo tuần: <?php echo date('d-m-Y', strtotime('+7 days') ); ?></td>
                 <td>Báo cáo tháng: <?php echo date('d-m-Y', strtotime('+30 days') ); ?></td>
             </tr>
@@ -914,9 +914,8 @@ global $wpdb;
 function orders_baocao_admin_page() {
     ?>
     <form action="<?php echo admin_url( 'admin.php?page=admin_orders'); ?>" method="GET">
-        <input type="hidden" name="page" value="admin_orders">
     <div>
-        <div>Ngày bắt đầu :<input id="date" type="date" name="dateFirst"> Ngày kết thúc :<input id="date" type="date" name="dateLast"> <input type="submit" value="Chọn"></div>
+        <div>Ngày bắt đầu :<input id="date" type="date" name="dateFirst" required> Ngày kết thúc :<input id="date" type="date" name="dateLast" required> <input type="submit" value="Chọn"></div>
     </div>
     </form>
     <?php
@@ -925,13 +924,13 @@ function orders_baocao_admin_page() {
 
 function orders_admin_page(){
     global $wpdb;
-    if(isset($_GET['dateFirst']) || isset($_GET['dateLast'])) {
-        $results = $wpdb->get_results( "SELECT * FROM `102_orders` WHERE DATE(`order_create_date`) >= ". $_GET['dateFirst'] ." AND DATE(`order_create_date`) <= ". $_GET['dateLast'] ." order by id desc", OBJECT );
+    if(isset($_GET['dateFirst']) && isset($_GET['dateLast'])) {
+        $results = $wpdb->get_results( "SELECT * FROM `102_orders` WHERE DATE(`order_create_date`) >= '". $_GET['dateFirst'] ."' AND DATE(`order_create_date`) <= '". $_GET['dateLast'] ."' order by id desc", OBJECT );
+        $order_doanhso_total = $wpdb->get_results( "SELECT SUM(`order_total`) as TOTAL FROM 102_orders WHERE DATE(`order_create_date`) >= '". $_GET['dateFirst'] ."' AND DATE(`order_create_date`) <= '". $_GET['dateLast'] ."' order by id desc", OBJECT );
     } else {
         $results = $wpdb->get_results( "SELECT * FROM 102_orders order by id desc", OBJECT );
+        $order_doanhso_total = $wpdb->get_results( "SELECT SUM(`order_total`) as TOTAL FROM 102_orders", OBJECT );
     }
-    echo "<xmp>";
-    var_dump($results);
     echo orders_doanhso_admin_page();
     ?>
     <div class="wrap">
@@ -942,6 +941,7 @@ function orders_admin_page(){
         <thead>
             <tr>
                 <td>ID</td>
+                <td>Mã tour</td>
                 <td>Ngày tạo</td>
                 <td>Tên khách hàng</td>
                 <td>Địa chỉ</td>
@@ -961,6 +961,7 @@ function orders_admin_page(){
 
             <tr>
                 <td><?php echo $result->id; ?></td>
+                <td><?php echo $result->order_code; ?></td>
                 <td><?php echo $result->order_create_date; ?></td>
                 <td><?php echo $result->order_name; ?></td>
                 <td><?php echo $result->order_address; ?></td>
@@ -1003,12 +1004,99 @@ function orders_admin_page(){
                     ?>    
                 </td>
                 <td>
-                    <a href="#" class="btn">Xác nhận đơn hàng</a>
+                    <a id="myBtn<?php echo $result->id; ?>" href="#" onClick="getMyBtn(this.id)">Thay đổi trạng thái</a>
+                    <div id="myModal<?php echo $result->id; ?>" class="modal">
+                      <div class="modal-content" style="text-align: center;">
+                        <span class="close">&times;</span>
+                        <form action="<?php echo admin_url( 'admin.php?page=admin_orders'); ?>" method="POST">
+                            <input type="hidden" name="product_id" value="<?php echo $result->id; ?>">
+                            <select name="order_status">
+                                <option value="1">Đơn đặt hàng đã xác nhận</option>
+                                <option value="2">Đã ký hợp đồng & Thanh toán cọc</option>
+                                <option value="3">Đơn hàng thành công</option>
+                                <option value="4">Đơn đặt hàng đã xác nhận</option>
+                            </select>
+                            <input type="submit" value="Chọn">
+                        </form>
+                      </div>
+
+                    </div>
                 </td>
             </tr>
             <?php }
             ?>
         </tbody>
+        <tfooot>
+            <tr>
+                <td style="text-align: right;" colspan="10">Tổng doanh số <p><?php if(isset($_GET['dateFirst']) && isset($_GET['dateLast'])) { echo "(".$_GET['dateFirst']." - ".$_GET['dateLast'].")";} ?></p></td>
+                <td><?php echo number_format($order_doanhso_total[0]->TOTAL); ?> đ</td>
+                <td colspan="2"></td>
+            </tr>
+        </tfooot>
     </table>
+    <style>
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+</style>
+<script>
+    function getMyBtn(clicked_id) {
+        btn = clicked_id.substring(5);
+        var modal = document.getElementById("myModal"+btn);
+        var btn = document.getElementById("myBtn"+btn);
+        var span = document.getElementsByClassName("close")[0];
+        modal.style.display = "block";
+
+        // When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+    }
+
+
+
+
+</script>
     <?php
 }
