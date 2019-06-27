@@ -1017,10 +1017,11 @@ function orders_admin_page(){
                             <input type="hidden" name="page" value="admin_orders">
                             <input type="hidden" name="order_id" value="<?php echo $result->id; ?>">
                             <select name="order_status">
+                                <option value="1">Đơn đặt hàng mới</option>
                                 <option value="1">Đơn đặt hàng đã xác nhận</option>
                                 <option value="2">Đã ký hợp đồng & Thanh toán cọc</option>
                                 <option value="3">Đơn hàng thành công</option>
-                                <option value="4">Đơn đặt hàng đã xác nhận</option>
+                                <option value="4">Đơn đặt bị hủy</option>
                             </select>
                             <input type="submit" value="Chọn">
                         </form>
