@@ -861,7 +861,7 @@ add_action( 'admin_menu', 'my_admin_menu' );
 
 function my_admin_menu() {
     add_menu_page( 'Orders', 'Orders', 'manage_options', 'admin_orders', 'orders_admin_page', 'dashicons-tickets', 6  );
-    add_submenu_page( 'admin_orders', 'Doanh số', 'Báo cáo doanh thu', 'manage_options', 'order-doanh-so', 'orders_doanhso_admin_page');
+    //add_submenu_page( 'admin_orders', 'Doanh số', 'Báo cáo doanh thu', 'manage_options', 'order-doanh-so', 'orders_doanhso_admin_page');
 }
 
 function orders_doanhso_admin_page() {
@@ -914,6 +914,7 @@ global $wpdb;
 function orders_baocao_admin_page() {
     ?>
     <form action="<?php echo admin_url( 'admin.php?page=admin_orders'); ?>" method="GET">
+        <input type="hidden" name="page" value="admin_orders">
     <div>
         <div>Ngày bắt đầu :<input id="date" type="date" name="dateFirst" required> Ngày kết thúc :<input id="date" type="date" name="dateLast" required> <input type="submit" value="Chọn"></div>
     </div>
@@ -930,6 +931,10 @@ function orders_admin_page(){
     } else {
         $results = $wpdb->get_results( "SELECT * FROM 102_orders order by id desc", OBJECT );
         $order_doanhso_total = $wpdb->get_results( "SELECT SUM(`order_total`) as TOTAL FROM 102_orders", OBJECT );
+    }
+
+    if (isset($_POST['order_id']) && isset($_POST['order_status'])) {
+        $wpdb->update('102_orders', array('order_status' => $_POST['order_status']), array( 'ID' => $_POST['order_id'] ));
     }
     echo orders_doanhso_admin_page();
     ?>
@@ -983,19 +988,19 @@ function orders_admin_page(){
                     $order_status = $result->order_status; 
                     switch ($order_status) {
                         case 0:
-                            echo "Đơn đặt hàng mới";
+                            echo "<span style='color:red; font-weight:bold'>Đơn đặt hàng mới</span>";
                             break;
                         case 1:
-                                echo "Đơn đặt hàng đã xác nhận";
+                                echo "<span style='color:blue; font-weight:bold'>Đơn đặt hàng đã xác nhận</span>";
                                 break;                            
                         case 2:
-                                echo "Đã ký hợp đồng & Thanh toán cọc";
+                                echo "<span style='color:green; font-weight:bold'>Đã ký hợp đồng & Thanh toán cọc</span>";
                                 break;                                                    
                         case 3:
-                                echo "Đơn hàng thành công";
+                                echo "<span style='color:yellow; font-weight:bold'>Đơn hàng thành công</span>";
                                 break;                      
-                        case 3:
-                                echo "Đơn hàng bị hủy";
+                        case 4:
+                                echo "<span style='color:black; font-weight:bold'>Đơn hàng bị hủy</span>";
                                 break;                                                                                       
                         default:
                             # code...
@@ -1009,7 +1014,8 @@ function orders_admin_page(){
                       <div class="modal-content" style="text-align: center;">
                         <span class="close">&times;</span>
                         <form action="<?php echo admin_url( 'admin.php?page=admin_orders'); ?>" method="POST">
-                            <input type="hidden" name="product_id" value="<?php echo $result->id; ?>">
+                            <input type="hidden" name="page" value="admin_orders">
+                            <input type="hidden" name="order_id" value="<?php echo $result->id; ?>">
                             <select name="order_status">
                                 <option value="1">Đơn đặt hàng đã xác nhận</option>
                                 <option value="2">Đã ký hợp đồng & Thanh toán cọc</option>
