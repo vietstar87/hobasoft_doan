@@ -57,7 +57,19 @@ $session_id = session_id();
                                                                         <?php echo get_the_title($product_value); ?>
                                                                     </td>
                                                                     <td class="unit">
-                                                                        <label><?php echo number_format(get_field('price',$product_value)); ?></label>
+                                                                        <?php if(get_field('gia_khuyen_mai',$product_value)) { ?>
+
+                                                                                <label>
+                                                                                    <p><?php echo number_format(get_field('gia_khuyen_mai',$product_value)); ?> đ</p>
+                                                                                    <p><span style="text-decoration: line-through;"><?php echo number_format(get_field('price',$product_value)); ?> đ</span></p>
+                                                                            </label>
+                                                                            <?php 
+                                                                        } else { ?>
+                                                                                <label><?php echo number_format(get_field('price',$product_value)); ?></label>
+                                                                        <?php
+                                                                        } ?>
+                                                                        
+                                                                        
                                                                     </td>
                                                                     <td class="quantity">
                                                                         <input type="hidden" name="product[]" value="<?php echo $product_value; ?>">

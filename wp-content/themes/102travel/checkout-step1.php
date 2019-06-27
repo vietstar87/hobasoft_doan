@@ -52,14 +52,19 @@ session_destroy();
                                                 <form id="check-out-step-2" class="form form-blocking form--general check-out-step-2" action="<?php echo get_page_link( get_page_by_path( 'checkout-step-2' ) ); ?>" method="post">
                                                     <?php foreach ($products as $key => $product) { ?>
                                                         <input type="hidden" name="order_product[<?php echo $key; ?>]" value="<?php echo $product; ?>">
-                                                        <input type="hidden" name="order_total[<?php echo $key; ?>]" value="<?php echo get_field('price',$product)*$quantitys[$key] ?>">
+
+                                                            <?php if(get_field('gia_khuyen_mai',$product)) { ?>
+                                                                <input type="hidden" name="order_total[<?php echo $key; ?>]" value="<?php echo get_field('gia_khuyen_mai',$product)*$quantitys[$key] ?>">
+                                                            <?php } else { ?>
+                                                                <input type="hidden" name="order_total[<?php echo $key; ?>]" value="<?php echo get_field('price',$product)*$quantitys[$key] ?>">
+                                                            <?php
+                                                            } ?>
+
+                                                        
                                                     <?php } ?>
                                                     <?php foreach ($quantitys as $key => $quantity) { ?>
                                                         <input type="hidden" name="order_quantity[<?php echo $key; ?>]" value="<?php echo $quantity; ?>">
                                                     <?php } ?>
-
-                                                    
-
                                                     <div class="address-edit editable-section">
                                                         
                                                         <div class="row form">
@@ -202,20 +207,26 @@ session_destroy();
                                                             </a>
                                                         </div>
                                                         <div class="price" id="price_<?php echo $product ?>">
-                                                            <?php echo number_format($quantitys[$key] * get_field('price',$product)); ?> đ
+                                                            <?php if(get_field('gia_khuyen_mai',$product)) { ?>
+                                                                <?php echo number_format($quantitys[$key] * get_field('gia_khuyen_mai',$product)); ?> đ
+                                                                <?php 
+                                                            } else { ?>
+                                                                <?php echo number_format($quantitys[$key] * get_field('price',$product)); ?> đ
+                                                            <?php
+                                                            } ?>
                                                         </div>
                                                     </div>
                                                     <?php
                                                     } ?>
                                                 </div>
 
-                                                <ul class="order-summary">
+                                                <!-- <ul class="order-summary">
                                                     <li class="sep"></li>
                                                     <li class="total">
                                                         <span class="k">Tổng cộng</span>
                                                         <span class="v _total" id="cart_info_total _total"></span>
                                                     </li>
-                                                </ul>
+                                                </ul> -->
                                             </div>
                                         </div>
                                     </div>
