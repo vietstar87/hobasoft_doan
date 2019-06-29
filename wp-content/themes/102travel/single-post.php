@@ -16,7 +16,7 @@
                         <div class="container">
                             <div class="box box--shadow">
                                 <div class="sidebar-content sidebar-first">
-                                    <?php get_sidebar() ?>
+                                    <?php get_sidebar('page') ?>
                                     <?php
                                     if ( have_posts() ) {
                                         while ( have_posts() ) {
