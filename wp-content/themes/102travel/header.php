@@ -24,7 +24,7 @@
 
                 <div id="logo" class="logo-wrapper col-md-5">
                     <a href="<?php bloginfo('home') ?>">
-                        <img src="<?php echo $theme['company-logo']['thumbnail']; ?>" height="40px" width="auto">
+                        <img src="<?php echo $theme['company-logo']['url']; ?>" height="40px" width="auto">
                     </a>
                 </div>
 
