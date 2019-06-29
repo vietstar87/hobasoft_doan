@@ -16,7 +16,7 @@
                         <div class="container">
                             <div class="box box--shadow">
                                 <div class="sidebar-content sidebar-first">
-                                    <?php get_sidebar('page') ?>
+                                    <?php get_sidebar() ?>
                                     <?php
                                     if ( have_posts() ) {
                                         while ( have_posts() ) {
@@ -24,10 +24,6 @@
                                             ?>
                                     <div class="content wysiwyg">
                                         <h1 class="page-title"><?php the_title() ?></h1>
-                                        <p>Ngày sinh: <?php echo get_field('hdv_ngay_sinh'); ?></p>
-                                        <p>Giới tính: <?php echo get_field('hdv_gioi_tinh'); ?></p>
-                                        <p>Số điện thoại: <?php echo get_field('hdv_so_dien_thoai'); ?></p>
-                                        <p>Địa chỉ: <?php echo get_field('hdv_dia_chi'); ?></p>
                                         <?php the_content() ?>
                                     </div>
                                     <?php
