@@ -13,9 +13,7 @@
                 </nav>
             </div>
         </div>
-        <!--</form>-->
     </div>
-
     <div class="header__main  clearfix">
         <div class="container">
             <div class="row">
@@ -24,13 +22,13 @@
                 <a class="toggle-search visible-xs visible-sm" data-target="#main-search"><i
                             class="hd hd-search"></i></a>
 
-                <div id="logo" class="logo-wrapper col-md-4">
+                <div id="logo" class="logo-wrapper col-md-5">
                     <a href="<?php bloginfo('home') ?>">
                         <img src="<?php echo $theme['company-logo']['thumbnail']; ?>" height="40px" width="auto">
                     </a>
                 </div>
 
-                <div style="padding-left: 10px;" class="search-area col-md-8" id="main-search">
+                <div style="padding-left: 10px;" class="search-area col-md-7" id="main-search">
                     <form action="<?php bloginfo('home') ?>" method="get" class="">
                         <div class="search-box form-inline clearfix">
                             <div class="search-box__category">
