@@ -1033,7 +1033,7 @@ function orders_admin_page(){
         </tbody>
         <tfooot>
             <tr>
-                <td style="text-align: right;" colspan="10">Tổng doanh số <p><?php if(isset($_GET['dateFirst']) && isset($_GET['dateLast'])) { echo "(".$_GET['dateFirst']." - ".$_GET['dateLast'].")";} ?></p></td>
+                <td style="text-align: right;" colspan="9">Tổng doanh số <p><?php if(isset($_GET['dateFirst']) && isset($_GET['dateLast'])) { echo "(".$_GET['dateFirst']." - ".$_GET['dateLast'].")";} ?></p></td>
                 <td><?php echo number_format($order_doanhso_total[0]->TOTAL); ?> đ</td>
                 <td colspan="2"></td>
             </tr>
