@@ -1,19 +1,32 @@
 <div class="sidebar">
     <div class="sidebar__widget widget">
-        <h3 class="widget__title">Giới thiệu</h3>
+        <h3 class="widget__title">Tin tức</h3>
         <ul class="side-menu">
-            <li class=""><a href="https://www.hotdeal.vn/ve-chung-toi.html">Về Chúng
-                    Tôi</a></li>
-            <li class=""><a href="https://www.hotdeal.vn/quy-che-hoat-dong.html">Quy
-                    chế hoạt động</a></li>
-            <li class="active"><a
-                        href="https://www.hotdeal.vn/chinh-sach-bao-mat-thong-tin.html">Chính
-                    sách bảo mật thông tin</a></li>
-            <li class=""><a
-                        href="https://www.hotdeal.vn/co-che-giai-quyet-tranh-chap.html">Cơ
-                    chế giải quyết tranh chấp</a></li>
-            <li class=""><a href="https://www.hotdeal.vn/lien-he.html">Liên Hệ</a>
-            </li>
+        	<?php
+$args = array(
+	'numberposts' => 10,
+	'offset' => 0,
+	'category' => 0,
+	'orderby' => 'post_date',
+	'order' => 'DESC',
+	'include' => '',
+	'exclude' => '',
+	'meta_key' => '',
+	'meta_value' =>'',
+	'post_type' => 'post',
+	'post_status' => 'publish',
+	'suppress_filters' => true
+);
+
+$recent_posts = wp_get_recent_posts( $args, ARRAY_A );
+?>
+<?php
+	$recent_posts = wp_get_recent_posts();
+	foreach( $recent_posts as $recent ){
+		echo '<li><a href="' . get_permalink($recent["ID"]) . '">' .   $recent["post_title"].'</a> </li> ';
+	}
+	wp_reset_query();
+?>
         </ul>
     </div>
 </div>
