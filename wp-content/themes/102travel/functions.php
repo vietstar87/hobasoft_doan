@@ -946,7 +946,6 @@ function orders_admin_page(){
         <thead>
             <tr>
                 <td>ID</td>
-                <td>Mã tour</td>
                 <td>Ngày tạo</td>
                 <td>Tên khách hàng</td>
                 <td>Địa chỉ</td>
@@ -966,7 +965,6 @@ function orders_admin_page(){
 
             <tr>
                 <td><?php echo $result->id; ?></td>
-                <td><?php echo $result->order_code; ?></td>
                 <td><?php echo $result->order_create_date; ?></td>
                 <td><?php echo $result->order_name; ?></td>
                 <td><?php echo $result->order_address; ?></td>
