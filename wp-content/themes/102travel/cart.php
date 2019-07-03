@@ -73,18 +73,9 @@ $session_id = session_id();
                                                                     </td>
                                                                     <td class="quantity">
                                                                         <input type="hidden" name="product[]" value="<?php echo $product_value; ?>">
-                                                                        <select class="quantity__modifier quantity-modifier quantity-modifier-select " name="quantity[]">
-                                                                            <option value="1" selected="selected">1</option>
-                                                                            <option value="2">2</option>
-                                                                            <option value="3">3</option>
-                                                                            <option value="4">4</option>
-                                                                            <option value="5">5</option>
-                                                                            <option value="6">6</option>
-                                                                            <option value="7">7</option>
-                                                                            <option value="8">8</option>
-                                                                            <option value="9">9</option>
-                                                                            <option value="10">10</option>
-                                                                        </select>
+                                                                        <input class="quantity_value" style="width: 36px;float: left;height: 30px;padding: 0 5px;" type="text" name="quantity[]" value="1">
+                                                                        <div class="inc button_quantity">+</div>
+                                                                        <div class="dec button_quantity">-</div>
                                                                     </td>
                                                                     <td id="total_355245" class="total"></td>
                                                                 </tr>
@@ -114,5 +105,41 @@ $session_id = session_id();
         </div>
 </div>
 <?php get_template_part('include/script') ?>
+<style type="text/css">
+    .button_quantity {
+    margin: 0 0 0 5px;
+    text-indent: -9999px;
+    cursor: pointer;
+    width: 29px;
+    height: 29px;
+    float: left;
+    text-align: center;
+    background: url("https://css-tricks.com/examples/InputNumberIncrementer/images/buttons.png") no-repeat;
+}
+.dec {
+  background-position: 0 -29px;
+}
+</style>
+<script type="text/javascript">
+    $(".button_quantity").on("click", function() {
+
+  var $button = $(this);
+  var oldValue = $button.parent().find("input.quantity_value").val();
+
+  if ($button.text() == "+") {
+      var newVal = parseFloat(oldValue) + 1;
+    } else {
+   // Don't allow decrementing below zero
+    if (oldValue > 0) {
+      var newVal = parseFloat(oldValue) - 1;
+    } else {
+      newVal = 0;
+    }
+  }
+
+  $button.parent().find("input.quantity_value").val(newVal);
+
+});
+</script>
 </body>
 </html>
